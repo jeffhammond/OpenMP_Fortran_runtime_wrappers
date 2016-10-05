@@ -1,6 +1,8 @@
 program test
   use iso_c_binding
   use omp_lib_f03
+  use omp_lock_f03
+  use omp_target_f03
   implicit none
   integer :: nt
   call omp_set_num_threads_c(4)

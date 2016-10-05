@@ -199,5 +199,166 @@ module omp_lib_f03
       implicit none
     end function omp_in_final_c
   end interface
+  ! 3.2.22 omp_get_proc_bind
+  interface
+    integer (c_int) function omp_get_proc_bind_c() &
+                             bind(C, name="omp_get_proc_bind")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_proc_bind_c
+  end interface
+  ! 3.2.23 omp_get_num_places
+  interface
+    integer (c_int) function omp_get_num_places_c() &
+                             bind(C, name="omp_get_num_places")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_num_places_c
+  end interface
+  ! 3.2.24 omp_get_place_num_procs
+  interface
+    integer (c_int) function omp_get_place_num_procs_c() &
+                             bind(C, name="omp_get_place_num_procs")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_place_num_procs_c
+  end interface
+  ! 3.2.25 omp_get_place_proc_ids
+  interface
+    integer (c_int) function omp_get_place_proc_ids_c() &
+                             bind(C, name="omp_get_place_proc_ids")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_place_proc_ids_c
+  end interface
+  ! 3.2.26 omp_get_place_num
+  interface
+    integer (c_int) function omp_get_place_num_c() &
+                             bind(C, name="omp_get_place_num")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_place_num_c
+  end interface
+  ! 3.2.27 omp_get_partition_num_places
+  interface
+    integer (c_int) function omp_get_partition_num_places_c() &
+                             bind(C, name="omp_get_partition_num_places")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_partition_num_places_c
+  end interface
+  ! 3.2.28 omp_get_partition_place_nums
+  interface
+    integer (c_int) function omp_get_partition_place_nums_c() &
+                             bind(C, name="omp_get_partition_place_nums")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_partition_place_nums_c
+  end interface
+  ! 3.2.29 omp_set_default_device
+  interface
+    subroutine omp_set_default_device_c(default_device) &
+               bind(C, name="omp_set_default_device")
+      use iso_c_binding, only: c_int
+      implicit none
+      integer (c_int), value :: default_device
+    end subroutine omp_set_default_device_c
+  end interface
+  ! 3.2.30 omp_get_default_device
+  interface
+    integer (c_int) function omp_get_default_device_c() &
+                             bind(C, name="omp_get_default_device")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_default_device_c
+  end interface
+  ! 3.2.31 omp_get_num_devices
+  interface
+    integer (c_int) function omp_get_num_devices_c() &
+                             bind(C, name="omp_get_num_devices")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_num_devices_c
+  end interface
+  ! 3.2.32 omp_get_num_teams
+  interface
+    integer (c_int) function omp_get_num_teams_c() &
+                             bind(C, name="omp_get_num_teams")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_num_teams_c
+  end interface
+  ! 3.2.33 omp_get_team_num
+  interface
+    integer (c_int) function omp_get_team_num_c() &
+                             bind(C, name="omp_get_team_num")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_team_num_c
+  end interface
+  ! 3.2.34 omp_is_initial_device
+  interface
+    integer (c_int) function omp_is_initial_device_c() &
+                             bind(C, name="omp_is_initial_device")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_is_initial_device_c
+  end interface
+  ! 3.2.35 omp_get_initial_device
+  interface
+    integer (c_int) function omp_get_initial_device_c() &
+                             bind(C, name="omp_get_initial_device")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_initial_device_c
+  end interface
+  ! 3.2.36 omp_get_max_task_priority
+  interface
+    integer (c_int) function omp_get_max_task_priority_c() &
+                             bind(C, name="omp_get_max_task_priority")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_max_task_priority_c
+  end interface
+  ! 3.4.1 omp_get_wtime
+  interface
+    integer (c_double) function omp_get_wtime_c() &
+                                bind(C, name="omp_get_wtime")
+      use iso_c_binding, only: c_double
+      implicit none
+    end function omp_get_wtime_c
+  end interface
+  ! 3.4.2 omp_get_wtick
+  interface
+    integer (c_double) function omp_get_wtick_c() &
+                             bind(C, name="omp_get_wtick")
+      use iso_c_binding, only: c_double
+      implicit none
+    end function omp_get_wtick_c
+  end interface
 end module omp_lib_f03
+
+module omp_lock_f03
+  ! 3.3.1 omp_init_lock
+  interface
+    subroutine omp_init_lock_c(lock) &
+               bind(C, name="omp_init_lock")
+      use iso_c_binding, only: c_ptr
+      implicit none
+      type (c_ptr), value :: lock
+    end subroutine omp_init_lock_c
+  end interface
+  ! 3.3.6 omp_test_lock
+  interface
+    integer (c_int) function omp_test_lock_c(lock) &
+                             bind(C, name="omp_test_lock")
+      use iso_c_binding, only: c_int, c_ptr
+      implicit none
+      type (c_ptr), value :: lock
+    end function omp_test_lock_c
+  end interface
+end module omp_lock_f03
+
+module omp_target_f03
+end module omp_target_f03
 

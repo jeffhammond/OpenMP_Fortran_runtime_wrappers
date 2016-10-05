@@ -342,6 +342,14 @@ module omp_lib_f03
 end module omp_lib_f03
 
 module omp_lock_f03
+  use iso_c_binding, only: c_ptr
+#ifdef USING_KMP_RUNTIME
+  type, bind(c) :: omp_lock_c_t
+    type (c_ptr) :: lock
+  end type omp_lock_c_t
+#else
+#error Sorry, I cannot forward-declare your omp_lock_t!
+#endif
   ! 3.3.1 omp_init_lock
   interface
     subroutine omp_init_lock_c(lock) &

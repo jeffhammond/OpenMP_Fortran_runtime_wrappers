@@ -1,5 +1,5 @@
 FC 	:= ifort
-FCFLAGS	:= -std08 -free -g -warn all -traceback
+FCFLAGS	:= -std08 -free -g -warn all -traceback -DUSING_KMP_RUNTIME
 
 LIBS	:= -qopenmp
 

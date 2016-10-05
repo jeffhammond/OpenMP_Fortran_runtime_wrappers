@@ -1,7 +1,12 @@
 FC 	:= ifort
 FCFLAGS	:= -std08 -free -g -warn all -traceback
 
-all: omp_lib_f03.mod
+LIBS	:= -qopenmp
+
+all: test.x
+
+test.x: test.F omp_lib_f03.mod
+	$(FC) $(FCFLAGS) $< $(LIBS) -o $@
 
 %.mod: %.F
 	$(FC) $(FCFLAGS) -c $<

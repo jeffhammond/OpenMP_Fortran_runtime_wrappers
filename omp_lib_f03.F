@@ -13,6 +13,7 @@
 ! END MODULE FTN_C
 
 module omp_lib_f03
+  ! omp_set_num_threads
   interface
     subroutine omp_set_num_threads_c(num_threads) &
                bind(C, name="omp_set_num_threads")
@@ -20,6 +21,22 @@ module omp_lib_f03
       implicit none
       integer (c_int), value :: num_threads
     end subroutine omp_set_num_threads_c
+  end interface
+  ! omp_get_num_threads
+  interface
+    integer (c_int) function omp_get_num_threads_c() &
+                             bind(C, name="omp_get_num_threads")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_num_threads_c
+  end interface
+  ! omp_get_max_threads
+  interface
+    integer (c_int) function omp_get_max_threads_c() &
+                             bind(C, name="omp_get_max_threads")
+      use iso_c_binding, only: c_int
+      implicit none
+    end function omp_get_max_threads_c
   end interface
 end module omp_lib_f03
 

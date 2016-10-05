@@ -7,13 +7,21 @@ LIBS	:= -qopenmp
 
 all: run
 
-run: test.x
-	./test.x
+run: test_lib.x test_lock.x test_target.x
+	./test_lib.x
+	./test_lock.x
+	./test_target.x
 	-rm $<
+	-rm *.mod
 
-test.x: test.F omp_lib_f03.mod
+test_lib.x: test_lib.F omp_lib_f03.mod
 	$(FC) $(FCFLAGS) $< $(LIBS) -o $@
-	-rm omp_lib_f03.mod
+
+test_lock.x: test_lock.F omp_lock_f03.mod omp_lib_f03.mod
+	$(FC) $(FCFLAGS) $< $(LIBS) -o $@
+
+test_target.x: test_target.F omp_target_f03.mod omp_lib_f03.mod
+	$(FC) $(FCFLAGS) $< $(LIBS) -o $@
 
 %.mod: %.F
 	$(FC) $(FCFLAGS) -c $<

@@ -1,17 +1,18 @@
-! example from http://stackoverflow.com/tags/fortran-iso-c-binding/info
-! MODULE FTN_C
-!   INTERFACE
-!     INTEGER (C_INT) FUNCTION C_LIBRARY_FUNCTION(SENDBUF, SENDCOUNT, RECVCOUNTS) &
-!                     BIND(C, NAME='C_Library_Function')
-!       USE ISO_C_BINDING
-!       IMPLICIT NONE
-!       TYPE (C_PTR), VALUE :: SENDBUF
-!       INTEGER (C_INT), VALUE :: SENDCOUNT
-!       TYPE (C_PTR), VALUE :: RECVCOUNTS
-!     END FUNCTION C_LIBRARY_FUNCTION
-!   END INTERFACE
-! END MODULE FTN_C
+!------------------------------------------
+!
+! Copyright 2016, Intel Corporation
+!
+! See LICENSE for details.
+!
+! Author: Jeff Hammond
+!         Data Center Group
+!         Intel Corporation
+!
+!------------------------------------------
 
+!
+! TODO figure out how to wrap enum
+!
 !  use iso_c_binding
 !  enum, bind(c) :: omp_sched_t
 !    enumerator :: omp_sched_static, omp_sched_dynamic, &

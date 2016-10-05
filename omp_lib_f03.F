@@ -342,7 +342,7 @@ module omp_lib_f03
 end module omp_lib_f03
 
 module omp_lock_f03
-  use iso_c_binding, only: c_ptr
+!  use iso_c_binding, only: c_ptr
 !#if defined(USING_KMP_RUNTIME)
 !  type, bind(c) :: omp_lock_c_t
 !    type (c_ptr) :: lock
@@ -405,5 +405,94 @@ module omp_lock_f03
 end module omp_lock_f03
 
 module omp_target_f03
+  ! 3.5.1 omp_target_alloc
+  interface
+    type (c_ptr) function omp_target_alloc_c(bytes, device) &
+                          bind(C, name="omp_target_alloc")
+      use iso_c_binding, only: c_ptr, c_size_t, c_int
+      implicit none
+      integer (c_size_t), value :: bytes
+      integer (c_int), value :: device
+    end function omp_target_alloc_c
+  end interface
+  ! 3.5.2 omp_target_free
+  interface
+    subroutine omp_target_free_c(ptr, device) &
+               bind(C, name="omp_target_free")
+      use iso_c_binding, only: c_ptr, c_int
+      implicit none
+      type (c_ptr), value :: ptr
+      integer (c_int), value :: device
+    end subroutine omp_target_free_c
+  end interface
+  ! 3.5.3 omp_target_is_present
+  interface
+    integer (c_int) function omp_target_is_present_c(ptr, device) &
+                             bind(C, name="omp_target_is_present")
+      use iso_c_binding, only: c_ptr, c_int
+      implicit none
+      type (c_ptr), value :: ptr
+      integer (c_int), value :: device
+    end function omp_target_is_present_c
+  end interface
+  ! 3.5.4 omp_target_memcpy
+  interface
+    integer (c_int) function omp_target_memcpy_c(dst, src, length, &
+                                           dst_offset, src_offset, &
+                                           dst_device, src_device) &
+                             bind(C, name="omp_target_memcpy")
+      use iso_c_binding, only: c_ptr, c_size_t, c_int
+      implicit none
+      type (c_ptr), value :: dst, src
+      integer (c_size_t), value :: length
+      integer (c_size_t), value :: dst_offset, src_offset
+      integer (c_int), value :: dst_device, src_device
+    end function omp_target_memcpy_c
+  end interface
+  ! 3.5.5 omp_target_memcpy_rect
+  interface
+    integer (c_int) function omp_target_memcpy_rect_c(dst, src,     &
+                                           element_size, num_dims,  &
+                                           volume,                  &
+                                           dst_offset, src_offset,  &
+                                           dst_device, src_device)  &
+                             bind(C, name="omp_target_memcpy_rect")
+      use iso_c_binding, only: c_ptr, c_size_t, c_int
+      implicit none
+      type (c_ptr), value :: dst, src
+      integer (c_size_t), value :: element_size
+      integer (c_int), value :: num_dims
+      integer (c_size_t) :: volume(*)
+      integer (c_size_t) :: dst_offset(*), src_offset(*)
+      integer (c_int), value :: dst_device, src_device
+    end function omp_target_memcpy_rect_c
+  end interface
+  ! 3.5.6 omp_target_associate_ptr
+  interface
+    integer (c_int) function omp_target_associate_ptr_c(host_ptr,     &
+                                                        device_ptr,   &
+                                                        bytes,        &
+                                                        device_offset,&
+                                                        device_num)   &
+                             bind(C, name="omp_target_associate_ptr")
+      use iso_c_binding, only: c_ptr, c_size_t, c_int
+      implicit none
+      type (c_ptr), value :: host_ptr, device_ptr
+      integer (c_size_t), value :: bytes
+      integer (c_size_t), value :: device_offset
+      integer (c_int), value :: device_num
+    end function omp_target_associate_ptr_c
+  end interface
+  ! 3.5.7 omp_target_disassociate_ptr
+  interface
+    integer (c_int) function omp_target_disassociate_ptr_c(ptr,     &
+                                                           device)  &
+                             bind(C, name="omp_target_disassociate_ptr")
+      use iso_c_binding, only: c_ptr, c_int
+      implicit none
+      type (c_ptr), value :: ptr
+      integer (c_int), value :: device
+    end function omp_target_disassociate_ptr_c
+  end interface
 end module omp_target_f03
 

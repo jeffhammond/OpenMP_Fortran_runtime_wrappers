@@ -1,5 +1,5 @@
 FC 	:= ifort
-FCFLAGS	:= -std08 -free -g -warn all -traceback -DUSING_KMP_RUNTIME
+FCFLAGS	:= -std08 -free -g -warn all -traceback #-DUSING_KMP_RUNTIME
 
 LIBS	:= -qopenmp
 
@@ -11,7 +11,7 @@ run: test_lib.x test_lock.x test_target.x
 	./test_lib.x
 	./test_lock.x
 	./test_target.x
-	-rm $<
+	-rm *.x
 	-rm *.mod
 
 test_lib.x: test_lib.F omp_lib_f03.mod
@@ -30,6 +30,7 @@ test_target.x: test_target.F omp_target_f03.mod omp_lib_f03.mod
 	$(FC) $(FCFLAGS) -c $<
 
 clean:
+	-rm -f *.x
 	-rm -f *.o
 	-rm -f *.mod
 	-rm -rf *.dSYM

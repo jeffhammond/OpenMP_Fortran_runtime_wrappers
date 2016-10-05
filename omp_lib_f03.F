@@ -343,13 +343,19 @@ end module omp_lib_f03
 
 module omp_lock_f03
   use iso_c_binding, only: c_ptr
-#ifdef USING_KMP_RUNTIME
-  type, bind(c) :: omp_lock_c_t
-    type (c_ptr) :: lock
-  end type omp_lock_c_t
-#else
-#error Sorry, I cannot forward-declare your omp_lock_t!
-#endif
+!#if defined(USING_KMP_RUNTIME)
+!  type, bind(c) :: omp_lock_c_t
+!    type (c_ptr) :: lock
+!  end type omp_lock_c_t
+!#elif defined(USING_GOMP_RUNTIME)
+!  ! this is untested!!!
+!  type, bind(c) :: omp_lock_c_t
+!    !dir$ attributes align: 8 :: lock
+!    character(len=64,kind=C_char) :: lock
+!  end type omp_lock_c_t
+!#else
+!#error Sorry, I cannot forward-declare your omp_lock_t!
+!#endif
   ! 3.3.1 omp_init_lock
   interface
     subroutine omp_init_lock_c(lock) &
@@ -357,6 +363,7 @@ module omp_lock_f03
       use iso_c_binding, only: c_ptr
       implicit none
       type (c_ptr), value :: lock
+      !type (omp_lock_c_t) :: lock
     end subroutine omp_init_lock_c
   end interface
   ! 3.3.3 omp_destroy_lock

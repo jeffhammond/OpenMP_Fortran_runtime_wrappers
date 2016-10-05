@@ -24,4 +24,5 @@ test.x: test.F omp_lib_f03.mod
 clean:
 	-rm -f *.o
 	-rm -f *.mod
+	-rm -rf *.dSYM
 

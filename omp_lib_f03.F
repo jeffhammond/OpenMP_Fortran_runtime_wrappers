@@ -14,7 +14,7 @@
 ! TODO figure out how to wrap enum
 !
 !  use iso_c_binding
-!  enum, bind(c) :: omp_sched_t
+!  enum, bind(c) ! :: omp_sched_t
 !    enumerator :: omp_sched_static, omp_sched_dynamic, &
 !                  omp_sched_guided, omp_sched_auto
 !    enumerator omp_sched_static  = 1
@@ -24,6 +24,8 @@
 !  end enum
 
 module omp_lib_f03
+  use iso_c_binding
+  implicit none
   ! 3.2.1 omp_set_num_threads
   interface
     subroutine omp_set_num_threads_c(num_threads) &
@@ -348,6 +350,33 @@ module omp_lock_f03
       implicit none
       type (c_ptr), value :: lock
     end subroutine omp_init_lock_c
+  end interface
+  ! 3.3.3 omp_destroy_lock
+  interface
+    subroutine omp_destroy_lock_c(lock) &
+               bind(C, name="omp_destroy_lock")
+      use iso_c_binding, only: c_ptr
+      implicit none
+      type (c_ptr), value :: lock
+    end subroutine omp_destroy_lock_c
+  end interface
+  ! 3.3.4 omp_set_lock
+  interface
+    subroutine omp_set_lock_c(lock) &
+               bind(C, name="omp_set_lock")
+      use iso_c_binding, only: c_ptr
+      implicit none
+      type (c_ptr), value :: lock
+    end subroutine omp_set_lock_c
+  end interface
+  ! 3.3.5 omp_unset_lock
+  interface
+    subroutine omp_unset_lock_c(lock) &
+               bind(C, name="omp_unset_lock")
+      use iso_c_binding, only: c_ptr
+      implicit none
+      type (c_ptr), value :: lock
+    end subroutine omp_unset_lock_c
   end interface
   ! 3.3.6 omp_test_lock
   interface
